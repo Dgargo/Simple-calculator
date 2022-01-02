@@ -172,6 +172,7 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
         self.add_functions()
+        self.reseting = False
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -212,14 +213,16 @@ class Ui_MainWindow(object):
         self.btn_equal.clicked.connect(self.results)
 
     def write_number(self, number):
-        if self.label_result.text() == '0':
+        if self.label_result.text() == '0' or self.reseting:
             self.label_result.setText(number)
+            self.reseting = False
         else:
             self.label_result.setText(self.label_result.text() + number)
 
     def results(self):
         res = eval(self.label_result.text())
         self.label_result.setText(str(res))
+        self.reseting = True
 
 
 if __name__ == "__main__":
